@@ -59,3 +59,47 @@ Our application provides an all-in-one, lightweight solution featuring a public-
    ```bash
    git clone https://github.com/BYULabs/wdd430-micro-feedback.git
    cd wdd430-micro-feedback
+   ```
+
+2. **Install dependencies:**
+    ```bash
+    npm install
+    ```
+
+3. **Configure Environment Variables:**
+Create a `.env.local` file in the root directory and add the following keys:
+    ```env
+    DATABASE_URL="your-database-connection-string"
+    NEXTAUTH_SECRET="your-auth-secret"
+    NEXTAUTH_URL="http://localhost:3000"
+    ```
+
+4. **Run the development server:**
+    ```bash
+    npm run dev
+    ```
+
+Open [http://localhost:3000](http://localhost:3000) in your browser to view the application.
+
+---
+
+## 📡 API Documentation & Route Handlers
+
+The application exposes standard API Route Handlers demonstrating the full Client → Server → Database lifecycle:
+
+| Endpoint | Method | Purpose | Auth Required |
+| --- | --- | --- | --- |
+| `/api/changelogs` | `GET`, `POST` | Retrieve all release logs or create a new entry. | `POST` (Admin) |
+| `/api/changelogs/[id]` | `PUT`, `DELETE` | Update or soft-delete a specific release log. | Yes (Admin) |
+| `/api/requests` | `GET`, `POST` | Fetch community requests or submit a new proposal. | `POST` (Public) |
+| `/api/requests/[id]/upvote` | `PATCH` | Increment upvote count for a feature request. | Public |
+
+---
+
+## 🛠️ Known Issues & Future Enhancements (Phase 2)
+
+* **Current Known Issues:** None at present.
+* **Phase 2 Enhancements:**
+    * Embeddable JavaScript widget snippet for third-party websites.
+    * Email notifications when a tracked feature request moves to "Completed".
+
