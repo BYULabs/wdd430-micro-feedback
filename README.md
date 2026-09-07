@@ -1,36 +1,61 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SaaS Micro-Feedback & Changelog Widget
 
-## Getting Started
+A lightweight, full-stack feedback and release management widget designed for indie developers to communicate product updates, collect user suggestions, and prioritize feature requests.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 👥 Team Members
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+* **Sebastián Iturralde** — Team Lead / Full-Stack Integration  
+  GitHub: [@itusebastian](https://github.com/itusebastian) | [Portfolio](https://byulabs.github.io/)
+* **Maria Teresa Arroyo** — Frontend & UI/UX  
+  GitHub: [@maritherecua](https://github.com/maritherecua) | [Portfolio](https://wdd430-portfolio-jade.vercel.app/)
+* **Martin Cespedes** — Backend & Database  
+  GitHub: [@martingerardoc](https://github.com/martingerardoc) | [Portfolio](https://wdd430-portfolio-iota.vercel.app/)
+* **Mike Brignol** — Authentication & API Route Handlers  
+  GitHub: [@mikebrignol](https://github.com/mikebrignol) | [Portfolio](https://github.com/mikebrignol/wdd430-portfolio)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 📋 Project Overview
 
-## Learn More
+### Problem Statement
+Indie developers and small product teams often lack a simple, centralized way to communicate product updates and gather structured feature feedback from users without introducing bloated third-party tools or complex infrastructure.
 
-To learn more about Next.js, take a look at the following resources:
+### Value Proposition & Solution
+Our application provides an all-in-one, lightweight solution featuring a public-facing page where users can view release notes and submit/upvote feature requests, alongside an authenticated admin portal where developers can manage release logs and control feature statuses.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## 🛠️ Tech Stack & Requirements
 
-## Deploy on Vercel
+* **Framework:** Next.js (App Router)
+* **Language:** TypeScript
+* **Database:** MongoDB
+* **Authentication:** Auth.js v5 / Clerk
+* **Hosting:** Vercel
+* **Styling & Components:** Tailwind CSS / Design System Palette
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## ✨ Core Features & UI Views
+
+1. **Public Changelog Feed (View 1):** Timeline view of recent release notes and product announcements.
+2. **Feature Request & Upvoting Board (View 2):** Community submission board where users can post ideas and upvote existing requests.
+3. **Admin Portal & Dashboard (View 3):** Authenticated view for developers to create, edit, or soft-delete changelogs and update feature statuses (*Planned, In Progress, Completed*).
+
+---
+
+## 🚀 Setup & Local Development Instructions
+
+### Prerequisites
+* Node.js (v18+ recommended)
+* npm, pnpm, or yarn
+* Git
+
+### Installation Steps
+
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/BYULabs/wdd430-micro-feedback.git
+   cd wdd430-micro-feedback
