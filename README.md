@@ -6,13 +6,13 @@ A lightweight, full-stack feedback and release management widget designed for in
 
 ## 👥 Team Members
 
-- **Sebastián Iturralde** — 
+- **Sebastián Iturralde** —
   GitHub: [@itusebastian](https://github.com/itusebastian) | [Portfolio](https://byulabs.github.io/)
-- **Maria Teresa Arroyo** — 
+- **Maria Teresa Arroyo** —
   GitHub: [@maritherecua](https://github.com/maritherecua) | [Portfolio](https://wdd430-portfolio-jade.vercel.app/)
-- **Martin Cespedes** — 
+- **Martin Cespedes** —
   GitHub: [@martingerardoc](https://github.com/martingerardoc) | [Portfolio](https://wdd430-portfolio-iota.vercel.app/)
-- **Mike Brignol** — 
+- **Mike Brignol** —
   GitHub: [@mikebrignol](https://github.com/mikebrignol) | [Portfolio](https://github.com/mikebrignol/wdd430-portfolio)
 
 ---
