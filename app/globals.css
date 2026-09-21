@@ -1,26 +1,127 @@
 @import 'tailwindcss';
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, monospace;
+
+  /* Terminal palette: near-black canvas, one shade lighter for panels. */
+  --color-canvas: #0a0f16;
+  --color-panel: #0d131d;
+  --color-ink: #052e1b;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  body {
+    background-color: var(--color-canvas);
+    color: var(--color-slate-300);
+  }
+
+  ::selection {
+    background: rgb(16 185 129 / 0.35);
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-canvas);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #1f2937;
+    border-radius: 6px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #374151;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@utility grid-bg {
+  background-image:
+    linear-gradient(to right, rgb(148 163 184 / 0.055) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(148 163 184 / 0.055) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+@utility glow {
+  background: radial-gradient(
+    closest-side,
+    rgb(16 185 129 / 0.14),
+    transparent 70%
+  );
+}
+
+@utility glow-cyan {
+  background: radial-gradient(
+    closest-side,
+    rgb(34 211 238 / 0.08),
+    transparent 70%
+  );
+}
+
+@utility panel-enter {
+  animation: panel-in 0.25s ease-out;
+}
+
+@utility card-enter {
+  animation: card-in 0.32s ease-out;
+}
+
+@utility modal-enter {
+  animation: modal-in 0.22s ease-out;
+}
+
+@utility cursor-blink {
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes card-in {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modal-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel-enter,
+  .card-enter,
+  .modal-enter,
+  .cursor-blink {
+    animation: none;
+  }
 }
