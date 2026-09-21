@@ -103,28 +103,6 @@ const statusFilters: { label: string; value: 'all' | RequestStatus }[] = [
 export default function Home() {
   return (
     <div className="flex flex-col flex-1 bg-zinc-50 font-sans dark:bg-black">
-      <header className="sticky top-0 z-10 border-b border-black/[.08] bg-white/80 backdrop-blur dark:border-white/[.08] dark:bg-black/80">
-        <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
-          <span className="text-lg font-semibold tracking-tight text-black dark:text-zinc-50">
-            ~/producthub
-          </span>
-          <nav className="flex items-center gap-6 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-            <a href="#roadmap" className="hover:text-black dark:hover:text-zinc-50">
-              Roadmap
-            </a>
-            <a href="/admin" className="hover:text-black dark:hover:text-zinc-50">
-              Admin Login
-            </a>
-            <a
-              href="/sign-in"
-              className="rounded-full bg-foreground px-4 py-2 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
-            >
-              Sign In
-            </a>
-          </nav>
-        </div>
-      </header>
-
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
         <section className="flex flex-col items-center gap-6 text-center">
           <span className="rounded-full bg-black/[.06] px-4 py-1.5 text-sm font-medium text-zinc-700 dark:bg-white/[.08] dark:text-zinc-300">
@@ -261,9 +239,6 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="border-t border-black/[.08] py-8 text-center text-sm text-zinc-500 dark:border-white/[.08] dark:text-zinc-500">
-        © 2026 ProductHub. Built for indie developers.
-      </footer>
     </div>
   );
 }
