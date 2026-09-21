@@ -13,7 +13,12 @@ type FeatureRequest = {
   upvotes: number;
 };
 
-const projects: ProjectName[] = ['ProductHub', 'FormCraft', 'DeployBot', 'Logify'];
+const projects: ProjectName[] = [
+  'ProductHub',
+  'FormCraft',
+  'DeployBot',
+  'Logify',
+];
 
 const stats = [
   { label: 'projects live', value: '4' },
@@ -112,8 +117,9 @@ export default function Home() {
             Ship code. Share what you built. Let the crowd decide.
           </h1>
           <p className="max-w-xl text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            ProductHub is where indie developers showcase their apps, gather feature
-            requests, and publish release updates directly to their users.
+            ProductHub is where indie developers showcase their apps, gather
+            feature requests, and publish release updates directly to their
+            users.
           </p>
           <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
             <a
@@ -238,7 +244,6 @@ export default function Home() {
           </ul>
         </section>
       </main>
-
     </div>
   );
 }
