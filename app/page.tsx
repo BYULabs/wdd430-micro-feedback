@@ -1,4 +1,13 @@
-type ProjectName = 'ProductHub' | 'FormCraft' | 'DeployBot' | 'Logify';
+'use client';
+
+import { useState } from 'react';
+import {
+  ProjectFilterBar,
+  type ProjectFilter,
+  type StatusFilter,
+} from '@/components/ProjectFilterBar';
+
+type ProjectName = Exclude<ProjectFilter, 'all'>;
 
 type RequestStatus = 'planned' | 'in-progress' | 'completed' | 'under-review';
 
@@ -93,14 +102,27 @@ const featureRequests: FeatureRequest[] = [
   },
 ];
 
-const statusFilters: { label: string; value: 'all' | RequestStatus }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Planned', value: 'planned' },
-  { label: 'In Progress', value: 'in-progress' },
-  { label: 'Completed', value: 'completed' },
-];
-
 export default function Home() {
+  const [selectedProject, setSelectedProject] = useState<ProjectFilter>('all');
+  const [selectedStatus, setSelectedStatus] = useState<StatusFilter>('all');
+  const [searchTerm, setSearchTerm] = useState('');
+  const normalizedSearchTerm = searchTerm.trim().toLowerCase();
+  const filteredRequests = featureRequests.filter((request) => {
+    const matchesProject = selectedProject === 'all' || request.project === selectedProject;
+    const matchesStatus = selectedStatus === 'all' || request.status === selectedStatus;
+    const searchableText = [
+      request.project,
+      request.title,
+      request.description,
+      request.category,
+    ]
+      .join(' ')
+      .toLowerCase();
+    const matchesSearch = !normalizedSearchTerm || searchableText.includes(normalizedSearchTerm);
+
+    return matchesProject && matchesStatus && matchesSearch;
+  });
+
   return (
     <div className="flex flex-col flex-1 bg-zinc-50 font-sans dark:bg-black">
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
@@ -145,22 +167,15 @@ export default function Home() {
         </section>
 
         <section id="projects" className="mt-16">
-          <h2 className="mb-4 text-sm font-medium text-zinc-600 dark:text-zinc-400">
-            Filter by Project
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            <button className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background">
-              ⚡ All Projects
-            </button>
-            {projects.map((project) => (
-              <button
-                key={project}
-                className="rounded-full border border-black/[.08] px-4 py-2 text-sm font-medium text-zinc-700 transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-[#1a1a1a]"
-              >
-                {project}
-              </button>
-            ))}
-          </div>
+          <ProjectFilterBar
+            projects={projects}
+            selectedProject={selectedProject}
+            selectedStatus={selectedStatus}
+            searchTerm={searchTerm}
+            onProjectChange={setSelectedProject}
+            onStatusChange={setSelectedStatus}
+            onSearchChange={setSearchTerm}
+          />
         </section>
 
         <section id="roadmap" className="mt-12">
@@ -183,21 +198,13 @@ export default function Home() {
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-2">
-            {statusFilters.map((filter) => (
-              <button
-                key={filter.value}
-                className="rounded-full border border-black/[.08] px-3 py-1.5 text-sm font-medium capitalize text-zinc-700 transition-colors hover:bg-black/[.04] dark:border-white/[.145] dark:text-zinc-300 dark:hover:bg-[#1a1a1a]"
-              >
-                {filter.label}
-              </button>
-            ))}
             <span className="ml-auto text-sm text-zinc-500 dark:text-zinc-500">
-              {featureRequests.length + 137} requests
+              {filteredRequests.length} of {featureRequests.length + 137} requests
             </span>
           </div>
 
           <ul className="mt-6 flex flex-col gap-4">
-            {featureRequests.map((request) => (
+            {filteredRequests.map((request) => (
               <li
                 key={request.id}
                 className="flex items-start gap-4 rounded-2xl border border-black/[.08] bg-white p-5 dark:border-white/[.08] dark:bg-white/[.03]"
@@ -236,6 +243,11 @@ export default function Home() {
               </li>
             ))}
           </ul>
+          {filteredRequests.length === 0 && (
+            <p className="mt-6 rounded-2xl border border-dashed border-black/[.12] p-8 text-center text-sm text-zinc-500 dark:border-white/[.12]">
+              No requests match the current filters.
+            </p>
+          )}
         </section>
       </main>
 
