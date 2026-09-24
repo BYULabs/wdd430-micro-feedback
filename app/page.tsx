@@ -1,3 +1,5 @@
+import SubmitRequestButton from '@/components/SubmitRequestButton';
+
 type ProjectName = 'ProductHub' | 'FormCraft' | 'DeployBot' | 'Logify';
 
 type RequestStatus = 'planned' | 'in-progress' | 'completed' | 'under-review';
@@ -122,12 +124,11 @@ export default function Home() {
             users.
           </p>
           <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-            <a
-              href="#submit"
-              className="flex h-12 items-center justify-center rounded-full bg-foreground px-6 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
+            <SubmitRequestButton
+              className="flex h-12 items-center justify-center rounded-full border border-solid border-black/[.08] px-6 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
             >
               Submit Feature Request
-            </a>
+            </SubmitRequestButton>
             <a
               href="#projects"
               className="flex h-12 items-center justify-center rounded-full border border-solid border-black/[.08] px-6 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
@@ -179,13 +180,11 @@ export default function Home() {
                 What&apos;s New (Changelog)
               </button>
             </div>
-            <a
-              id="submit"
-              href="#"
-              className="rounded-full bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc]"
+            <SubmitRequestButton
+              className="flex h-12 items-center justify-center rounded-full border border-solid border-black/[.08] px-6 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a]"
             >
               Submit Request
-            </a>
+            </SubmitRequestButton>
           </div>
 
           <div className="mt-6 flex flex-wrap items-center gap-2">
