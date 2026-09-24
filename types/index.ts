@@ -59,6 +59,24 @@ export interface Changelog {
   publishedAt: string;
 }
 
+/** Feature request joined with its project's name for feed display. */
+export interface FeatureRequestWithProject extends FeatureRequest {
+  projectName: string;
+}
+
+/** Changelog joined with its project's name for feed display. */
+export interface ChangelogWithProject extends Changelog {
+  projectName: string;
+}
+
+/** Aggregate counts shown in the landing page hero. */
+export interface PlatformStats {
+  projects: number;
+  openRequests: number;
+  votes: number;
+  releases: number;
+}
+
 /** Payload for `POST /api/requests`. */
 export interface CreateRequestInput {
   projectId: string;
