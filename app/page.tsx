@@ -1,4 +1,4 @@
-import Link from 'next/link';
+import { ButtonLink } from '@/components/Button';
 import { ChangelogList } from '@/components/ChangelogList';
 import { FeatureRequestList } from '@/components/FeatureRequestList';
 import { FeedTabs } from '@/components/FeedTabs';
@@ -48,13 +48,9 @@ export default async function Home() {
             },
           ]}
           action={
-            <Link
-              id="submit"
-              href="#submit"
-              className="rounded-md bg-emerald-400 px-3 py-2 font-mono text-sm font-medium text-ink transition-colors hover:bg-emerald-300"
-            >
+            <ButtonLink href="#submit" variant="primary" size="sm">
               + Submit request
-            </Link>
+            </ButtonLink>
           }
         />
       </section>
