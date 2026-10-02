@@ -1,10 +1,9 @@
 'use client';
 
+import { Lightbulb, X } from 'lucide-react';
 import { useEffect, useState } from 'react';
-import {
-  REQUEST_CATEGORIES,
-  type CreateRequestInput,
-} from '@/types';
+import { buttonClasses } from '@/components/Button';
+import { REQUEST_CATEGORIES, type CreateRequestInput } from '@/types';
 
 interface SubmitRequestModalProps {
   isOpen: boolean;
@@ -153,7 +152,7 @@ export default function SubmitRequestModal({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 p-4 backdrop-blur-sm"
       role="presentation"
       onMouseDown={(event) => {
         if (event.target === event.currentTarget) {
@@ -162,33 +161,31 @@ export default function SubmitRequestModal({
       }}
     >
       <div
-        className="modal-enter w-full max-w-lg rounded-2xl border border-white/10 bg-zinc-950 p-6 shadow-2xl"
+        className="modal-enter relative max-h-[90vh] w-full max-w-lg overflow-y-auto rounded-2xl border border-slate-800 bg-panel p-6 shadow-2xl sm:p-8"
         role="dialog"
         aria-modal="true"
         aria-labelledby="submit-request-title"
       >
-        <div className="mb-6 flex items-start justify-between gap-4">
-          <div>
+        <div className="mb-6 flex items-center justify-between border-b border-slate-800 pb-4">
+          <div className="flex items-center gap-2">
+            <span className="rounded-lg border border-emerald-500/20 bg-emerald-500/10 p-2 text-emerald-400">
+              <Lightbulb className="h-5 w-5" aria-hidden />
+            </span>
             <h2
               id="submit-request-title"
-              className="text-xl font-semibold text-white"
+              className="font-mono text-lg font-bold text-slate-100"
             >
               Submit Feature Request
             </h2>
-            <p className="mt-1 text-sm text-zinc-400">
-              Tell us what feature you would like to see.
-            </p>
           </div>
 
           <button
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="rounded-lg p-2 text-zinc-400 transition-colors hover:bg-white/10 hover:text-white"
+            className="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-800/60 hover:text-slate-300"
           >
-            <span aria-hidden="true" className="text-xl">
-              ×
-            </span>
+            <X className="h-5 w-5" aria-hidden />
           </button>
         </div>
 
@@ -196,7 +193,7 @@ export default function SubmitRequestModal({
           <div>
             <label
               htmlFor="projectId"
-              className="mb-2 block text-sm font-medium text-zinc-200"
+              className="mb-2 block font-mono text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Target project
             </label>
@@ -210,7 +207,7 @@ export default function SubmitRequestModal({
               aria-describedby={
                 errors.projectId ? 'projectId-error' : undefined
               }
-              className="w-full rounded-lg border border-white/10 bg-zinc-900 px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-4 py-2.5 font-mono text-sm text-slate-100 transition-colors placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/60 focus:outline-none"
             >
               <option value="">Select a project</option>
 
@@ -224,7 +221,8 @@ export default function SubmitRequestModal({
             {errors.projectId && (
               <p
                 id="projectId-error"
-                className="mt-1 text-sm text-red-400"
+                role="alert"
+                className="mt-1.5 font-mono text-xs text-rose-400"
               >
                 {errors.projectId}
               </p>
@@ -234,7 +232,7 @@ export default function SubmitRequestModal({
           <div>
             <label
               htmlFor="title"
-              className="mb-2 block text-sm font-medium text-zinc-200"
+              className="mb-2 block font-mono text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Title
             </label>
@@ -248,11 +246,15 @@ export default function SubmitRequestModal({
               placeholder="Example: Add Slack notifications"
               aria-invalid={Boolean(errors.title)}
               aria-describedby={errors.title ? 'title-error' : undefined}
-              className="w-full rounded-lg border border-white/10 bg-zinc-900 px-3 py-2.5 text-sm text-white placeholder:text-zinc-600 outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-4 py-2.5 font-mono text-sm text-slate-100 transition-colors placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/60 focus:outline-none"
             />
 
             {errors.title && (
-              <p id="title-error" className="mt-1 text-sm text-red-400">
+              <p
+                id="title-error"
+                role="alert"
+                className="mt-1.5 font-mono text-xs text-rose-400"
+              >
                 {errors.title}
               </p>
             )}
@@ -261,7 +263,7 @@ export default function SubmitRequestModal({
           <div>
             <label
               htmlFor="description"
-              className="mb-2 block text-sm font-medium text-zinc-200"
+              className="mb-2 block font-mono text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Description
             </label>
@@ -277,13 +279,14 @@ export default function SubmitRequestModal({
               aria-describedby={
                 errors.description ? 'description-error' : undefined
               }
-              className="w-full resize-none rounded-lg border border-white/10 bg-zinc-900 px-3 py-2.5 text-sm text-white placeholder:text-zinc-600 outline-none focus:border-emerald-500"
+              className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-4 py-2.5 font-mono text-sm text-slate-100 transition-colors placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/60 focus:outline-none resize-none"
             />
 
             {errors.description && (
               <p
                 id="description-error"
-                className="mt-1 text-sm text-red-400"
+                role="alert"
+                className="mt-1.5 font-mono text-xs text-rose-400"
               >
                 {errors.description}
               </p>
@@ -293,7 +296,7 @@ export default function SubmitRequestModal({
           <div>
             <label
               htmlFor="category"
-              className="mb-2 block text-sm font-medium text-zinc-200"
+              className="mb-2 block font-mono text-xs font-semibold tracking-wider text-slate-300 uppercase"
             >
               Category
             </label>
@@ -304,10 +307,8 @@ export default function SubmitRequestModal({
               value={formData.category}
               onChange={handleChange}
               aria-invalid={Boolean(errors.category)}
-              aria-describedby={
-                errors.category ? 'category-error' : undefined
-              }
-              className="w-full rounded-lg border border-white/10 bg-zinc-900 px-3 py-2.5 text-sm text-white outline-none focus:border-emerald-500"
+              aria-describedby={errors.category ? 'category-error' : undefined}
+              className="w-full rounded-lg border border-slate-800 bg-slate-900/80 px-4 py-2.5 font-mono text-sm text-slate-100 transition-colors placeholder:text-slate-600 focus:border-emerald-400/60 focus:ring-2 focus:ring-emerald-400/60 focus:outline-none"
             >
               {REQUEST_CATEGORIES.map((category) => (
                 <option key={category} value={category}>
@@ -317,17 +318,21 @@ export default function SubmitRequestModal({
             </select>
 
             {errors.category && (
-              <p id="category-error" className="mt-1 text-sm text-red-400">
+              <p
+                id="category-error"
+                role="alert"
+                className="mt-1.5 font-mono text-xs text-rose-400"
+              >
                 {errors.category}
               </p>
             )}
           </div>
 
-          <div className="flex justify-end gap-3 pt-2">
+          <div className="flex items-center justify-end gap-3 border-t border-slate-800 pt-4">
             <button
               type="button"
               onClick={onClose}
-              className="rounded-full border border-white/10 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:bg-white/5"
+              className={buttonClasses({ variant: 'ghost' })}
             >
               Cancel
             </button>
@@ -335,9 +340,9 @@ export default function SubmitRequestModal({
             <button
               type="submit"
               disabled={isSubmitting}
-              className="rounded-full bg-emerald-500 px-5 py-2.5 text-sm font-medium text-black transition-colors hover:bg-emerald-400 disabled:cursor-not-allowed disabled:opacity-50"
+              className={buttonClasses({ variant: 'primary' })}
             >
-              {isSubmitting ? 'Submitting...' : 'Submit Request'}
+              {isSubmitting ? 'Submitting…' : 'Submit Request'}
             </button>
           </div>
         </form>
