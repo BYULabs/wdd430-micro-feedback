@@ -10,7 +10,7 @@ const statusStyles: Record<RequestStatus, string> = {
 export function StatusBadge({ status }: { status: RequestStatus }) {
   return (
     <span
-      className={`rounded border px-2 py-0.5 font-mono text-xs ${statusStyles[status]}`}
+      className={`rounded-full border px-2.5 py-1 font-mono text-xs whitespace-nowrap ${statusStyles[status]}`}
     >
       {status}
     </span>

@@ -24,10 +24,7 @@ export default function SubmitRequestButton({
         {children}
       </button>
 
-      <SubmitRequestModal
-        isOpen={isOpen}
-        onClose={() => setIsOpen(false)}
-      />
+      <SubmitRequestModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
     </>
   );
 }
