@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useState } from 'react';
+import SubmitRequestModal from './SubmitRequestModal';
 
 const navigationLinks = [
   { href: '/explore', label: 'Explore' },
@@ -12,6 +13,7 @@ const navigationLinks = [
 export function Navbar() {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
 
   const isActive = (href: string) =>
     pathname === href || pathname.startsWith(`${href}/`);
@@ -36,9 +38,8 @@ export function Navbar() {
               key={link.href}
               href={link.href}
               aria-current={isActive(link.href) ? 'page' : undefined}
-              className={`relative px-3 py-2 text-sm transition-colors hover:text-zinc-50 ${
-                isActive(link.href) ? 'text-zinc-50' : 'text-zinc-500'
-              }`}
+              className={`relative px-3 py-2 text-sm transition-colors hover:text-zinc-50 ${isActive(link.href) ? 'text-zinc-50' : 'text-zinc-500'
+                }`}
             >
               {link.label}
               {isActive(link.href) && (
@@ -52,12 +53,13 @@ export function Navbar() {
         </nav>
 
         <div className="flex items-center gap-2 text-sm">
-          <Link
-            href="#submit"
+          <button
+            type="button"
             className="hidden rounded-md border border-white/[.12] px-3 py-2 text-zinc-400 transition-colors hover:border-white/[.24] hover:text-zinc-50 sm:inline-flex"
+            onClick={() => setIsSubmitModalOpen(true)}
           >
             + Submit request
-          </Link>
+          </button>
           <Link
             href="/sign-in"
             className="hidden rounded-md bg-zinc-100 px-3 py-2 font-medium text-zinc-950 transition-colors hover:bg-white sm:inline-flex"
@@ -93,11 +95,10 @@ export function Navbar() {
                 key={link.href}
                 href={link.href}
                 aria-current={isActive(link.href) ? 'page' : undefined}
-                className={`rounded-md px-3 py-3 text-sm transition-colors hover:bg-white/[.06] hover:text-zinc-50 ${
-                  isActive(link.href)
-                    ? 'bg-white/[.06] text-zinc-50'
-                    : 'text-zinc-400'
-                }`}
+                className={`rounded-md px-3 py-3 text-sm transition-colors hover:bg-white/[.06] hover:text-zinc-50 ${isActive(link.href)
+                  ? 'bg-white/[.06] text-zinc-50'
+                  : 'text-zinc-400'
+                  }`}
                 onClick={() => setIsMenuOpen(false)}
               >
                 {isActive(link.href) && (
@@ -106,13 +107,16 @@ export function Navbar() {
                 {link.label}
               </Link>
             ))}
-            <Link
-              href="#submit"
-              className="rounded-md px-3 py-3 text-sm text-zinc-400 transition-colors hover:bg-white/[.06] hover:text-zinc-50"
-              onClick={() => setIsMenuOpen(false)}
+            <button
+              type="button"
+              className="rounded-md px-3 py-3 text-left text-sm text-zinc-400 transition-colors hover:bg-white/[.06] hover:text-zinc-50"
+              onClick={() => {
+                setIsMenuOpen(false);
+                setIsSubmitModalOpen(true);
+              }}
             >
               + Submit request
-            </Link>
+            </button>
             <Link
               href="/sign-in"
               className="mt-1 rounded-md bg-zinc-100 px-3 py-3 text-center text-sm font-medium text-zinc-950"
@@ -123,6 +127,40 @@ export function Navbar() {
           </div>
         </nav>
       )}
+      <SubmitRequestModal
+        isOpen={isSubmitModalOpen}
+        onClose={() => setIsSubmitModalOpen(false)}
+      />
+import { User, GitBranch } from 'lucide-react';
+import { ButtonLink } from '@/components/Button';
+import { Logo } from '@/components/Logo';
+import { MainNav } from '@/components/MainNav';
+
+export function Navbar() {
+  return (
+    <header className="bg-canvas/85 sticky top-0 z-40 border-b border-slate-800/80 backdrop-blur-md">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="flex h-16 items-center justify-between gap-4">
+          <Logo />
+          <MainNav />
+
+          <div className="flex shrink-0 items-center gap-2.5">
+            <ButtonLink href="/login" variant="secondary" size="md">
+              <User className="h-4 w-4" aria-hidden />
+              Sign In
+            </ButtonLink>
+            <ButtonLink
+              href="/login"
+              variant="primary"
+              size="md"
+              className="hidden sm:inline-flex"
+            >
+              <GitBranch className="h-4 w-4" aria-hidden />
+              Get Started
+            </ButtonLink>
+          </div>
+        </div>
+      </div>
     </header>
   );
 }
