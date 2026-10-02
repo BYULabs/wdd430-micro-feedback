@@ -1,65 +1,55 @@
-import type { FeatureRequest, FeatureRequestStatus } from '@/app/lib/types';
-import UpvoteButton from '@/app/components/UpvoteButton';
-
-const STATUS_STYLES: Record<FeatureRequestStatus, { label: string; className: string }> = {
-    planned: {
-        label: 'Planned',
-        className: 'bg-blue-50 text-blue-700 ring-1 ring-inset ring-blue-600/20 dark:bg-blue-950 dark:text-blue-300',
-    },
-    'in-progress': {
-        label: 'In Progress',
-        className:
-            'bg-amber-50 text-amber-700 ring-1 ring-inset ring-amber-600/20 dark:bg-amber-950 dark:text-amber-300',
-    },
-    completed: {
-        label: 'Completed',
-        className:
-            'bg-emerald-50 text-emerald-700 ring-1 ring-inset ring-emerald-600/20 dark:bg-emerald-950 dark:text-emerald-300',
-    },
-};
+import { Clock, Tag } from 'lucide-react';
+import { StatusBadge } from '@/components/StatusBadge';
+import UpvoteButton from '@/components/UpvoteButton';
+import { formatRelativeTime } from '@/lib/format';
+import type { FeatureRequestWithProject } from '@/types';
 
 interface FeatureRequestCardProps {
-    request: FeatureRequest;
-    onToggleVote?: (requestId: string, hasVoted: boolean) => void;
+  request: FeatureRequestWithProject & { hasVoted?: boolean };
+  onToggleVote?: (requestId: string, hasVoted: boolean) => void;
 }
 
-export default function FeatureRequestCard({ request, onToggleVote }: FeatureRequestCardProps) {
-    const status = STATUS_STYLES[request.status];
-    const createdAt = new Intl.DateTimeFormat('en-US', {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-    }).format(new Date(request.createdAt));
+export default function FeatureRequestCard({
+  request,
+  onToggleVote,
+}: FeatureRequestCardProps) {
+  return (
+    <article className="card-enter flex items-start gap-4 rounded-xl border border-slate-800/80 bg-panel p-5 transition-colors hover:border-slate-700">
+      <UpvoteButton
+        requestId={request.id}
+        initialVoteCount={request.votes}
+        initialHasVoted={request.hasVoted}
+        onToggle={onToggleVote}
+      />
 
-    return (
-        <article className="flex gap-4 rounded-xl border border-zinc-200 bg-white p-4 shadow-sm dark:border-zinc-800 dark:bg-zinc-950">
-            <UpvoteButton
-                requestId={request.id}
-                initialVoteCount={request.voteCount}
-                initialHasVoted={request.hasVoted}
-                onToggle={onToggleVote}
-            />
+      <div className="min-w-0 flex-1">
+        <div className="mb-1.5 flex flex-wrap items-center justify-between gap-2">
+          <span className="rounded border border-slate-700 bg-slate-800 px-2 py-0.5 font-mono text-xs text-emerald-400">
+            {request.projectName}
+          </span>
+          <StatusBadge status={request.status} />
+        </div>
 
-            <div className="flex flex-1 flex-col gap-2">
-                <div className="flex flex-wrap items-center gap-2">
-                    <span className="rounded-full bg-zinc-100 px-2 py-0.5 text-xs font-medium text-zinc-600 dark:bg-zinc-800 dark:text-zinc-300">
-                        {request.projectName}
-                    </span>
-                    <span className={`rounded-full px-2 py-0.5 text-xs font-medium ${status.className}`}>
-                        {status.label}
-                    </span>
-                </div>
+        <h3 className="mb-1.5 text-base font-bold tracking-tight text-slate-100">
+          {request.title}
+        </h3>
+        <p className="mb-3 text-sm leading-relaxed text-slate-400">
+          {request.description}
+        </p>
 
-                <h3 className="text-base font-semibold text-zinc-900 dark:text-zinc-50">{request.title}</h3>
-                <p className="text-sm text-zinc-600 dark:text-zinc-400">{request.description}</p>
-
-                <div className="mt-1 flex flex-wrap items-center gap-2 text-xs text-zinc-500 dark:text-zinc-500">
-                    <span className="rounded-full border border-zinc-300 px-2 py-0.5 font-medium dark:border-zinc-700">
-                        {request.category}
-                    </span>
-                    <time dateTime={request.createdAt}>{createdAt}</time>
-                </div>
-            </div>
-        </article>
-    );
+        <div className="flex items-center gap-4 font-mono text-xs text-slate-500">
+          <span className="inline-flex items-center gap-1">
+            <Tag className="h-3.5 w-3.5" aria-hidden /> {request.category}
+          </span>
+          <time
+            dateTime={request.createdAt}
+            className="inline-flex items-center gap-1"
+          >
+            <Clock className="h-3.5 w-3.5" aria-hidden />{' '}
+            {formatRelativeTime(request.createdAt)}
+          </time>
+        </div>
+      </div>
+    </article>
+  );
 }
