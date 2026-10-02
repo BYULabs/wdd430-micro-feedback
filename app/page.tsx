@@ -1,113 +1,27 @@
 import SubmitRequestButton from '@/components/SubmitRequestButton';
 
 type ProjectName = 'ProductHub' | 'FormCraft' | 'DeployBot' | 'Logify';
+import { ButtonLink } from '@/components/Button';
+import { ChangelogList } from '@/components/ChangelogList';
+import { FeatureRequestList } from '@/components/FeatureRequestList';
+import { FeedTabs } from '@/components/FeedTabs';
+import { Hero } from '@/components/Hero';
+import {
+  getChangelogs,
+  getFeatureRequests,
+  getPlatformStats,
+} from '@/lib/data';
 
-type RequestStatus = 'planned' | 'in-progress' | 'completed' | 'under-review';
+// Votes and releases change constantly; render from the database per request.
+export const dynamic = 'force-dynamic';
 
-type FeatureRequest = {
-  id: string;
-  project: ProjectName;
-  title: string;
-  description: string;
-  status: RequestStatus;
-  category: string;
-  postedAgo: string;
-  upvotes: number;
-};
+export default async function Home() {
+  const [requests, changelogs, stats] = await Promise.all([
+    getFeatureRequests(),
+    getChangelogs(),
+    getPlatformStats(),
+  ]);
 
-const projects: ProjectName[] = [
-  'ProductHub',
-  'FormCraft',
-  'DeployBot',
-  'Logify',
-];
-
-const stats = [
-  { label: 'projects live', value: '4' },
-  { label: 'upvotes cast', value: '355' },
-  { label: 'features shipped', value: '12' },
-];
-
-const statusStyles: Record<RequestStatus, string> = {
-  planned: 'bg-blue-500/10 text-blue-400 ring-blue-500/20',
-  'in-progress': 'bg-amber-500/10 text-amber-400 ring-amber-500/20',
-  completed: 'bg-emerald-500/10 text-emerald-400 ring-emerald-500/20',
-  'under-review': 'bg-zinc-500/10 text-zinc-400 ring-zinc-500/20',
-};
-
-const statusLabels: Record<RequestStatus, string> = {
-  planned: 'Planned',
-  'in-progress': 'In Progress',
-  completed: 'Completed',
-  'under-review': 'Under Review',
-};
-
-const featureRequests: FeatureRequest[] = [
-  {
-    id: '1',
-    project: 'ProductHub',
-    title: 'Embeddable JS Widget for External Sites',
-    description:
-      'Allow devs to embed the feedback board directly inside their web apps using an iFrame or a lightweight 3kB JS script tag.',
-    status: 'in-progress',
-    category: 'Integrations',
-    postedAgo: '2 days ago',
-    upvotes: 115,
-  },
-  {
-    id: '2',
-    project: 'FormCraft',
-    title: 'Stripe Payment Element Support in Forms',
-    description:
-      'Enable payment fields directly inside form steps without leaving the custom checkout flow.',
-    status: 'planned',
-    category: 'Integrations',
-    postedAgo: '3 days ago',
-    upvotes: 98,
-  },
-  {
-    id: '3',
-    project: 'ProductHub',
-    title: 'Discord & Slack Webhook Notifications',
-    description:
-      'Automatically send a webhook message to a Discord or Slack channel whenever a user submits a new request or status changes.',
-    status: 'planned',
-    category: 'API & Webhooks',
-    postedAgo: '4 days ago',
-    upvotes: 72,
-  },
-  {
-    id: '4',
-    project: 'DeployBot',
-    title: 'Automatic Rollback on Build Failures',
-    description:
-      'Instantly restore the previous production container image if a newly deployed container fails health checks.',
-    status: 'in-progress',
-    category: 'Security',
-    postedAgo: '1 week ago',
-    upvotes: 64,
-  },
-  {
-    id: '5',
-    project: 'ProductHub',
-    title: 'Custom CSS & Dark Mode Customizer',
-    description:
-      'Give admins the ability to customize brand colors and match their main product aesthetic inside the widget.',
-    status: 'under-review',
-    category: 'UI & Dashboard',
-    postedAgo: '1 week ago',
-    upvotes: 64,
-  },
-];
-
-const statusFilters: { label: string; value: 'all' | RequestStatus }[] = [
-  { label: 'All', value: 'all' },
-  { label: 'Planned', value: 'planned' },
-  { label: 'In Progress', value: 'in-progress' },
-  { label: 'Completed', value: 'completed' },
-];
-
-export default function Home() {
   return (
     <div className="flex flex-col flex-1 bg-zinc-50 font-sans dark:bg-black">
       <main className="mx-auto w-full max-w-5xl flex-1 px-6 py-16">
@@ -244,5 +158,40 @@ export default function Home() {
         </section>
       </main>
     </div>
+    <main className="flex-1">
+      <Hero
+        stats={stats}
+        topRequest={requests[0]}
+        latestRelease={changelogs[0]}
+      />
+
+      <section
+        id="feed"
+        aria-label="Feedback and changelog feed"
+        className="mx-auto w-full max-w-6xl px-6 py-12"
+      >
+        <FeedTabs
+          tabs={[
+            {
+              id: 'roadmap',
+              label: 'Feedback & Roadmap',
+              count: requests.length,
+              content: <FeatureRequestList requests={requests} />,
+            },
+            {
+              id: 'changelog',
+              label: "What's New",
+              count: changelogs.length,
+              content: <ChangelogList changelogs={changelogs} />,
+            },
+          ]}
+          action={
+            <ButtonLink href="#submit" variant="primary" size="sm">
+              + Submit request
+            </ButtonLink>
+          }
+        />
+      </section>
+    </main>
   );
 }
