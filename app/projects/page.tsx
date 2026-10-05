@@ -88,7 +88,7 @@ export default async function ProjectsPage({
           {projects.map((p) => (
             <li
               key={p.id}
-              className="flex flex-col rounded-lg border border-slate-800/80 bg-[#0d131d] p-5"
+              className="relative flex flex-col rounded-lg border border-slate-800/80 bg-[#0d131d] p-5 transition-colors hover:border-emerald-500/30"
             >
               <div className="flex items-center gap-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-md border border-emerald-500/30 bg-emerald-500/10 font-mono text-sm font-bold text-emerald-400">
@@ -113,8 +113,8 @@ export default async function ProjectsPage({
                 </span>
               </div>
               <Link
-                href={`/projects/${p.id}`}
-                className="mt-4 rounded-md border border-emerald-500/30 px-3 py-2 text-center font-mono text-xs text-emerald-400 hover:bg-emerald-500/10"
+                href={`/projects/${encodeURIComponent(p.id)}`}
+                className="mt-4 rounded-md border border-emerald-500/30 px-3 py-2 text-center font-mono text-xs text-emerald-400 after:absolute after:inset-0 after:content-[''] hover:bg-emerald-500/10"
               >
                 View Board
               </Link>
