@@ -37,6 +37,17 @@ export interface Project {
   description: string;
 }
 
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+}
+
+/** User record including the bcrypt hash; never send this to the client. */
+export interface UserWithPassword extends User {
+  passwordHash: string;
+}
+
 export interface FeatureRequest {
   id: string;
   projectId: string;
