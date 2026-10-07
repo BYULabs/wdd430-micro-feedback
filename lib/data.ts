@@ -5,6 +5,7 @@ import type {
   PlatformStats,
   RequestCategory,
   RequestStatus,
+  UserWithPassword,
 } from '@/types';
 
 interface FeatureRequestRow {
@@ -27,6 +28,13 @@ interface ChangelogRow {
   title: string;
   notes: string[];
   published_at: Date | string;
+}
+
+interface UserRow {
+  id: string;
+  email: string;
+  name: string;
+  password_hash: string;
 }
 
 const toIsoString = (value: Date | string) => new Date(value).toISOString();
@@ -97,5 +105,25 @@ export async function getPlatformStats(): Promise<PlatformStats> {
     openRequests: row.open_requests,
     votes: row.votes,
     releases: row.releases,
+  };
+}
+
+/** Looks up a user for sign-in; includes the password hash, so server-only. */
+export async function getUserByEmail(
+  email: string
+): Promise<UserWithPassword | null> {
+  const [row] = (await sql`
+    SELECT id, email, name, password_hash
+    FROM users
+    WHERE email = ${email.toLowerCase()}
+  `) as UserRow[];
+
+  if (!row) return null;
+
+  return {
+    id: row.id,
+    email: row.email,
+    name: row.name,
+    passwordHash: row.password_hash,
   };
 }
