@@ -64,7 +64,7 @@ export function FeedTabs({ tabs, action }: FeedTabsProps) {
                 className={`relative flex items-center gap-2 py-4 font-mono text-sm transition-colors focus-visible:outline-none focus-visible:text-slate-50 ${
                   isActive
                     ? 'text-slate-50'
-                    : 'text-slate-500 hover:text-slate-300'
+                    : 'text-slate-400 hover:text-slate-300'
                 }`}
               >
                 {tab.label}
@@ -72,7 +72,7 @@ export function FeedTabs({ tabs, action }: FeedTabsProps) {
                   className={`rounded px-1.5 py-0.5 text-xs ${
                     isActive
                       ? 'bg-emerald-500/10 text-emerald-400'
-                      : 'bg-slate-800 text-slate-500'
+                      : 'bg-slate-800 text-slate-400'
                   }`}
                 >
                   {tab.count}

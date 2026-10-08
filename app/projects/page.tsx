@@ -14,7 +14,7 @@ export default async function ProjectsPage({
   const { q = '', category = '' } = await searchParams;
   const search = q.trim();
   const activeCategory = (PROJECT_CATEGORIES as readonly string[]).includes(
-    category,
+    category
   )
     ? category
     : '';
@@ -51,7 +51,7 @@ export default async function ProjectsPage({
           defaultValue={search}
           placeholder="Search projects..."
           aria-label="Search projects"
-          className="w-full rounded-md border border-slate-800/80 bg-[#0d131d] px-3 py-2 font-mono text-sm text-slate-100 placeholder:text-slate-500 focus:border-emerald-500/30 focus:outline-none"
+          className="w-full rounded-md border border-slate-800/80 bg-[#0d131d] px-3 py-2 font-mono text-sm text-slate-100 placeholder:text-slate-400 focus:border-emerald-500/30 focus:outline-none"
         />
         {activeCategory && (
           <input type="hidden" name="category" value={activeCategory} />
@@ -80,7 +80,7 @@ export default async function ProjectsPage({
       </div>
 
       {projects.length === 0 ? (
-        <p className="mt-10 font-mono text-sm text-slate-500">
+        <p className="mt-10 font-mono text-sm text-slate-400">
           No projects match your search.
         </p>
       ) : (
@@ -98,7 +98,7 @@ export default async function ProjectsPage({
                   <h2 className="font-mono text-base font-semibold text-slate-100">
                     {p.name}
                   </h2>
-                  <p className="font-mono text-xs text-slate-500">
+                  <p className="font-mono text-xs text-slate-400">
                     @{p.author}
                   </p>
                 </div>
@@ -106,7 +106,7 @@ export default async function ProjectsPage({
               <p className="mt-3 flex-1 text-sm text-slate-400">
                 {p.description}
               </p>
-              <div className="mt-4 flex items-center justify-between font-mono text-xs text-slate-500">
+              <div className="mt-4 flex items-center justify-between font-mono text-xs text-slate-400">
                 <span>{p.category}</span>
                 <span>
                   {p.requestCount} requests · {p.totalVotes} votes

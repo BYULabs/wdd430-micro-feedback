@@ -8,7 +8,7 @@ export function ChangelogList({
 }) {
   if (changelogs.length === 0) {
     return (
-      <p className="rounded-lg border border-dashed border-slate-800 p-10 text-center font-mono text-sm text-slate-500">
+      <p className="rounded-lg border border-dashed border-slate-800 p-10 text-center font-mono text-sm text-slate-400">
         No releases published yet. Check back soon.
       </p>
     );
@@ -30,7 +30,7 @@ export function ChangelogList({
             <span aria-hidden="true" className="text-slate-600">
               ·
             </span>
-            <time dateTime={changelog.publishedAt} className="text-slate-500">
+            <time dateTime={changelog.publishedAt} className="text-slate-400">
               {formatDate(changelog.publishedAt)}
             </time>
           </div>
