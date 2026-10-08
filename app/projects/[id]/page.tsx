@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
+import SubmitRequestButton from '@/components/SubmitRequestButton';
 import {
   getProject,
   getProjectChangelogs,
@@ -41,7 +42,7 @@ export default async function ProjectBoardPage({
     <main className="mx-auto w-full max-w-5xl px-6 py-10">
       <Link
         href="/projects"
-        className="font-mono text-xs text-slate-500 hover:text-slate-300"
+        className="font-mono text-xs text-slate-400 hover:text-slate-300"
       >
         &larr; All projects
       </Link>
@@ -55,7 +56,7 @@ export default async function ProjectBoardPage({
             {project.name}
           </h1>
           <p className="mt-1 text-sm text-slate-400">{project.description}</p>
-          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-slate-500">
+          <div className="mt-3 flex flex-wrap gap-x-5 gap-y-1 font-mono text-xs text-slate-400">
             <span>by @{project.author}</span>
             <span>{project.category}</span>
             <a
@@ -70,13 +71,13 @@ export default async function ProjectBoardPage({
         </div>
         <dl className="flex gap-6 font-mono">
           <div>
-            <dt className="text-xs text-slate-500">requests</dt>
+            <dt className="text-xs text-slate-400">requests</dt>
             <dd className="text-xl font-bold text-emerald-400">
               {project.requestCount}
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-slate-500">votes</dt>
+            <dt className="text-xs text-slate-400">votes</dt>
             <dd className="text-xl font-bold text-emerald-400">
               {project.totalVotes}
             </dd>
@@ -86,11 +87,19 @@ export default async function ProjectBoardPage({
 
       <div className="mt-8 grid gap-8 lg:grid-cols-3">
         <section className="lg:col-span-2">
-          <h2 className="font-mono text-lg font-semibold text-slate-100">
-            Feature Requests
-          </h2>
+          <div className="flex flex-wrap items-center justify-between gap-3">
+            <h2 className="font-mono text-lg font-semibold text-slate-100">
+              Feature Requests
+            </h2>
+            <SubmitRequestButton
+              initialProjectId={project.id}
+              className="inline-flex h-10 items-center justify-center rounded-md border border-emerald-500/40 px-4 font-mono text-xs font-semibold text-emerald-300 transition-colors hover:bg-emerald-500/10"
+            >
+              + Submit feature request
+            </SubmitRequestButton>
+          </div>
           {requests.length === 0 ? (
-            <p className="mt-4 font-mono text-sm text-slate-500">
+            <p className="mt-4 font-mono text-sm text-slate-400">
               No requests yet.
             </p>
           ) : (
@@ -104,7 +113,7 @@ export default async function ProjectBoardPage({
                     <span className="text-sm font-bold text-emerald-400">
                       {r.votes}
                     </span>
-                    <span className="text-[10px] text-slate-500">votes</span>
+                    <span className="text-[10px] text-slate-400">votes</span>
                   </div>
                   <div className="min-w-0 flex-1">
                     <div className="flex flex-wrap items-center gap-2">
@@ -120,7 +129,7 @@ export default async function ProjectBoardPage({
                     <p className="mt-1 text-sm text-slate-400">
                       {r.description}
                     </p>
-                    <p className="mt-2 font-mono text-xs text-slate-500">
+                    <p className="mt-2 font-mono text-xs text-slate-400">
                       {r.category}
                     </p>
                   </div>
@@ -135,7 +144,7 @@ export default async function ProjectBoardPage({
             Changelog
           </h2>
           {changelogs.length === 0 ? (
-            <p className="mt-4 font-mono text-sm text-slate-500">
+            <p className="mt-4 font-mono text-sm text-slate-400">
               No releases yet.
             </p>
           ) : (
@@ -149,7 +158,7 @@ export default async function ProjectBoardPage({
                     <span className="rounded border border-emerald-500/30 bg-emerald-500/10 px-2 py-0.5 text-emerald-400">
                       v{c.version}
                     </span>
-                    <span className="text-slate-500">
+                    <span className="text-slate-400">
                       {dateFormat.format(new Date(c.publishedAt))}
                     </span>
                   </div>

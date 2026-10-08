@@ -6,11 +6,13 @@ import SubmitRequestModal from './SubmitRequestModal';
 interface SubmitRequestButtonProps {
   children: React.ReactNode;
   className?: string;
+  initialProjectId?: string;
 }
 
 export default function SubmitRequestButton({
   children,
   className,
+  initialProjectId,
 }: SubmitRequestButtonProps) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -24,7 +26,12 @@ export default function SubmitRequestButton({
         {children}
       </button>
 
-      <SubmitRequestModal isOpen={isOpen} onClose={() => setIsOpen(false)} />
+      <SubmitRequestModal
+        key={initialProjectId ?? 'all-projects'}
+        isOpen={isOpen}
+        initialProjectId={initialProjectId}
+        onClose={() => setIsOpen(false)}
+      />
     </>
   );
 }
