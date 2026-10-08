@@ -1,6 +1,7 @@
 import { sql } from '@/lib/db';
 import type {
   ChangelogWithProject,
+  ChangelogInput,
   FeatureRequestWithProject,
   PlatformStats,
   RequestCategory,
@@ -83,6 +84,75 @@ export async function getChangelogs(): Promise<ChangelogWithProject[]> {
     notes: row.notes,
     publishedAt: toIsoString(row.published_at),
   }));
+}
+
+export async function setFeatureRequestStatus(
+  id: string,
+  status: RequestStatus
+): Promise<boolean> {
+  const updated = await sql`
+    UPDATE feature_requests
+    SET status = ${status}
+    WHERE id = ${id}
+    RETURNING id
+  `;
+
+  return updated.length > 0;
+}
+
+export async function deleteFeatureRequest(id: string): Promise<boolean> {
+  const deleted = await sql`
+    DELETE FROM feature_requests
+    WHERE id = ${id}
+    RETURNING id
+  `;
+
+  return deleted.length > 0;
+}
+
+export async function createChangelog(input: ChangelogInput): Promise<string> {
+  const id = `cl-${crypto.randomUUID()}`;
+
+  await sql`
+    INSERT INTO changelogs (id, project_id, version, title, notes)
+    VALUES (
+      ${id},
+      ${input.projectId},
+      ${input.version},
+      ${input.title},
+      ${input.notes}
+    )
+  `;
+
+  return id;
+}
+
+export async function updateChangelog(
+  id: string,
+  input: ChangelogInput
+): Promise<boolean> {
+  const updated = await sql`
+    UPDATE changelogs
+    SET
+      project_id = ${input.projectId},
+      version = ${input.version},
+      title = ${input.title},
+      notes = ${input.notes}
+    WHERE id = ${id}
+    RETURNING id
+  `;
+
+  return updated.length > 0;
+}
+
+export async function deleteChangelog(id: string): Promise<boolean> {
+  const deleted = await sql`
+    DELETE FROM changelogs
+    WHERE id = ${id}
+    RETURNING id
+  `;
+
+  return deleted.length > 0;
 }
 
 export async function getPlatformStats(): Promise<PlatformStats> {
