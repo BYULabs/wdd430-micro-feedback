@@ -11,7 +11,7 @@ Start in the public project directory, open a project board, and review its requ
 - **Sebastián Iturralde** — [GitHub](https://github.com/itusebastian) · [Portfolio](https://byulabs.github.io/)
 - **Maria Teresa Arroyo** — [GitHub](https://github.com/maritherecua) · [Portfolio](https://wdd430-portfolio-jade.vercel.app/)
 - **Martin Cespedes** — [GitHub](https://github.com/martingerardoc) · [Portfolio](https://wdd430-portfolio-iota.vercel.app/)
-- **Mike Brignol** — [GitHub](https://github.com/mikebrignol) · [Portfolio](https://github.com/mikebrignol/wdd430-portfolio)
+- **Mike Brignol** — [GitHub](https://github.com/mikebrignol) · [Portfolio](https://wdd430-portfolio-weld.vercel.app/)
 
 ## Stack and Views
 
@@ -35,7 +35,7 @@ The main views are `/` (public feedback and changelog feed), `/projects` (projec
 1. Clone the repository and install the locked dependencies:
 
    ```bash
-   git clone https://github.com/itusebastian/wdd430-micro-feedback.git
+   git clone https://github.com/BYUlabs/wdd430-micro-feedback.git
    cd wdd430-micro-feedback
    npm ci
    ```
@@ -84,7 +84,7 @@ Open [http://localhost:3000](http://localhost:3000).
    - `AUTH_TRUST_HOST` — `true` for the Render-hosted service
 
 4. Ensure `lib/schema.sql` has been applied to the Neon database. Create the initial admin with `npm run create-admin` from a trusted local environment whose `.env.local` points to the deployment database. Do not place admin credentials in this README or in source control.
-5. Deploy the service and open its `onrender.com` URL. Add the final production URL here once it is assigned: **Production URL: pending deployment**.
+5. Deploy the service and open its `onrender.com` URL. The current production deployment is hosted on Vercel: https://wdd430-micro-feedback.vercel.app/.
 
 ## API Routes
 
@@ -108,6 +108,6 @@ Invalid input returns a 400 response, missing records return 404, and unauthenti
 ## Known Issues and Opportunities
 
 - Votes are public and voter identity is not stored. A visitor can vote repeatedly, and the selected-vote state does not persist across page reloads.
-- This repository does not yet record the production URL or a fresh mobile Lighthouse report. Run Lighthouse against the deployed service and include Performance, Accessibility, Best Practices, and SEO scores in the submission.
+- This repository does not yet include a fresh mobile Lighthouse report. Run Lighthouse against the deployed service and include Performance, Accessibility, Best Practices, and SEO scores in the submission.
 - Contrast updates have been made for the reported muted-text failures; rerun the full WCAG/Lighthouse audit on the final deployed UI.
 - Future work could add a third-party embeddable widget, completion notifications, and persistent vote tracking.
