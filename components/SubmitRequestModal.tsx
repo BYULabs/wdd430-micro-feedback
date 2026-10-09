@@ -1,12 +1,14 @@
 'use client';
 
 import { Lightbulb, X } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import { buttonClasses } from '@/components/Button';
 import { REQUEST_CATEGORIES, type CreateRequestInput } from '@/types';
 
 interface SubmitRequestModalProps {
   isOpen: boolean;
+  initialProjectId?: string;
   onClose: () => void;
 }
 
@@ -21,16 +23,19 @@ const projects = [
 
 export default function SubmitRequestModal({
   isOpen,
+  initialProjectId,
   onClose,
 }: SubmitRequestModalProps) {
+  const router = useRouter();
   const [formData, setFormData] = useState<CreateRequestInput>({
-    projectId: '',
+    projectId: initialProjectId ?? '',
     title: '',
     description: '',
     category: 'Other',
   });
 
   const [errors, setErrors] = useState<FormErrors>({});
+  const [submitError, setSubmitError] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
@@ -121,6 +126,7 @@ export default function SubmitRequestModal({
 
     try {
       setIsSubmitting(true);
+      setSubmitError('');
 
       const response = await fetch('/api/requests', {
         method: 'POST',
@@ -135,16 +141,18 @@ export default function SubmitRequestModal({
       }
 
       setFormData({
-        projectId: '',
+        projectId: initialProjectId ?? '',
         title: '',
         description: '',
         category: 'Other',
       });
 
       setErrors({});
+      router.refresh();
       onClose();
     } catch (error) {
       console.error('Error submitting feature request:', error);
+      setSubmitError('Unable to submit your request. Please try again.');
     } finally {
       setIsSubmitting(false);
     }
@@ -183,7 +191,7 @@ export default function SubmitRequestModal({
             type="button"
             onClick={onClose}
             aria-label="Close dialog"
-            className="rounded-lg p-1 text-slate-500 transition-colors hover:bg-slate-800/60 hover:text-slate-300"
+            className="rounded-lg p-1 text-slate-400 transition-colors hover:bg-slate-800/60 hover:text-slate-300"
           >
             <X className="h-5 w-5" aria-hidden />
           </button>
@@ -327,6 +335,12 @@ export default function SubmitRequestModal({
               </p>
             )}
           </div>
+
+          {submitError && (
+            <p role="alert" className="font-mono text-xs text-rose-400">
+              {submitError}
+            </p>
+          )}
 
           <div className="flex items-center justify-end gap-3 border-t border-slate-800 pt-4">
             <button

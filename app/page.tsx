@@ -33,6 +33,7 @@ export default async function Home() {
         aria-label="Feedback and changelog feed"
         className="mx-auto w-full max-w-6xl px-6 py-12"
       >
+        <h2 className="sr-only">Community feedback and product updates</h2>
         <FeedTabs
           tabs={[
             {

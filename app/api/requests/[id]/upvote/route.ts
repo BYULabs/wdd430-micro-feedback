@@ -1,15 +1,31 @@
 import { sql } from '@/lib/db';
 
 export async function PATCH(
-  _request: Request,
+  request: Request,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  let body: unknown;
+  try {
+    body = await request.json();
+  } catch {
+    return Response.json({ error: 'Invalid JSON body.' }, { status: 400 });
+  }
+
+  if (
+    typeof body !== 'object' ||
+    body === null ||
+    !('delta' in body) ||
+    (body.delta !== 1 && body.delta !== -1)
+  ) {
+    return Response.json({ error: 'delta must be 1 or -1.' }, { status: 400 });
+  }
+
   try {
     const { id } = await params;
 
     const [updatedRequest] = await sql`
       UPDATE feature_requests
-      SET votes = votes + 1
+      SET votes = GREATEST(0, votes + ${body.delta})
       WHERE id = ${id}
       RETURNING
         id,
@@ -25,7 +41,7 @@ export async function PATCH(
     if (!updatedRequest) {
       return Response.json(
         { error: 'Feature request not found.' },
-        { status: 400 }
+        { status: 404 }
       );
     }
 

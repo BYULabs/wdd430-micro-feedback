@@ -8,7 +8,7 @@ export function FeatureRequestList({
 }) {
   if (requests.length === 0) {
     return (
-      <p className="rounded-lg border border-dashed border-slate-800 p-10 text-center font-mono text-sm text-slate-500">
+      <p className="rounded-lg border border-dashed border-slate-800 p-10 text-center font-mono text-sm text-slate-400">
         No feature requests yet. Be the first to suggest one.
       </p>
     );

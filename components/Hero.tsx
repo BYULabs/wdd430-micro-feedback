@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import SubmitRequestButton from '@/components/SubmitRequestButton';
 import type {
   ChangelogWithProject,
   FeatureRequestWithProject,
@@ -50,12 +51,9 @@ export function Hero({ stats, topRequest, latestRelease }: HeroProps) {
           </p>
 
           <div className="flex flex-col gap-3 font-mono text-sm sm:flex-row">
-            <Link
-              href="#submit"
-              className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-400 px-5 font-medium text-ink transition-colors hover:bg-emerald-300"
-            >
+            <SubmitRequestButton className="inline-flex h-11 items-center justify-center rounded-md bg-emerald-400 px-5 font-medium text-ink transition-colors hover:bg-emerald-300">
               + Submit feature request
-            </Link>
+            </SubmitRequestButton>
             <Link
               href="/projects"
               className="inline-flex h-11 items-center justify-center rounded-md border border-slate-700 px-5 text-slate-300 transition-colors hover:border-slate-500 hover:text-slate-50"
@@ -67,7 +65,7 @@ export function Hero({ stats, topRequest, latestRelease }: HeroProps) {
           <dl className="mt-4 grid grid-cols-2 gap-6 border-t border-slate-800/80 pt-6 sm:grid-cols-4">
             {statItems.map((stat) => (
               <div key={stat.label} className="flex flex-col gap-1">
-                <dt className="order-2 font-mono text-xs text-slate-500">
+                <dt className="order-2 font-mono text-xs text-slate-400">
                   {stat.label}
                 </dt>
                 <dd className="order-1 font-mono text-2xl font-semibold text-slate-50">
@@ -98,7 +96,7 @@ function TerminalMockup({
         <span className="h-3 w-3 rounded-full bg-red-400/80" />
         <span className="h-3 w-3 rounded-full bg-amber-400/80" />
         <span className="h-3 w-3 rounded-full bg-emerald-400/80" />
-        <span className="ml-3 font-mono text-xs text-slate-500">
+        <span className="ml-3 font-mono text-xs text-slate-400">
           ~/producthub — zsh
         </span>
       </div>
@@ -115,7 +113,7 @@ function TerminalMockup({
             <span className="text-amber-400">[{topRequest.status}]</span>
           </p>
         ) : (
-          <p className="text-slate-500">no requests yet</p>
+          <p className="text-slate-400">no requests yet</p>
         )}
 
         <p className="mt-3">
@@ -130,7 +128,7 @@ function TerminalMockup({
             ? `${latestRelease.projectName}: ${latestRelease.title}`
             : 'changelog published'}
         </p>
-        <p className="text-slate-500">
+        <p className="text-slate-400">
           → notified subscribers · updated roadmap
         </p>
 

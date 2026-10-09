@@ -37,7 +37,7 @@ export default function FeatureRequestCard({
           {request.description}
         </p>
 
-        <div className="flex items-center gap-4 font-mono text-xs text-slate-500">
+        <div className="flex items-center gap-4 font-mono text-xs text-slate-400">
           <span className="inline-flex items-center gap-1">
             <Tag className="h-3.5 w-3.5" aria-hidden /> {request.category}
           </span>

@@ -21,7 +21,7 @@ export function Footer({
     <footer className="bg-canvas border-t border-slate-800/80 py-8">
       <div
         className={cn(
-          'mx-auto flex flex-col items-center justify-between gap-4 px-4 font-mono text-xs text-slate-500 sm:flex-row sm:px-6',
+          'mx-auto flex flex-col items-center justify-between gap-4 px-4 font-mono text-xs text-slate-400 sm:flex-row sm:px-6',
           wide ? 'max-w-7xl' : 'max-w-6xl'
         )}
       >
