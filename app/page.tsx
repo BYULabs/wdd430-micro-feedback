@@ -11,13 +11,13 @@ type FeatureRequest = {
   category: string;
   postedAgo: string;
   upvotes: number;
-};
+};     
 
 const projects: ProjectName[] = [
   'ProductHub',
   'FormCraft',
   'DeployBot',
-  'Logify',
+  'Logify',                                           
 ];
 
 const stats = [
